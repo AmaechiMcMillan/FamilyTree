@@ -11,6 +11,10 @@ const seedDatabase = async () => {
     individualHooks: true,
     returning: true,
   });
+}
+
+const seedFambase = async () => {
+  await sequelize.sync({ force: true });
 
   await Fam.bulkCreate(famData,{
     individualHooks: false,
@@ -21,4 +25,4 @@ const seedDatabase = async () => {
   process.exit(0);
 };
 
-seedDatabase();
+seedFambase();
