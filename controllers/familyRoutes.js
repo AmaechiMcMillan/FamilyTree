@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 
     const fam = famData.map((fam) => fam.get({ plain: true }));
 
-    res.render('homepage', { 
+    res.render('family', { 
       fam, 
       logged_in: req.session.logged_in 
     });
