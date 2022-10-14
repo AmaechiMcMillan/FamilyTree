@@ -1,5 +1,5 @@
-DROP DATABASE IF EXISTS familytree_db;
-CREATE DATABASE familytree_db;
+DROP DATABASE IF EXISTS family_db;
+CREATE DATABASE family_db;
 
 USE family_db;
 
