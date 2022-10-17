@@ -7,19 +7,21 @@ const famData = require('./famData.json');
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });
 
-  const users = await User.bulkCreate(userData, {
+  await User.bulkCreate(userData, {
     individualHooks: true,
     returning: true,
   });
+};
 
-  for (const fam of famData) {
-    await Fam.create({
-      ...fam,
-      user_id: users[Math.floor(Math.random() * users.length)].id,
-    });
-  }
+const seedFambase = async () => {
+  await sequelize.sync({ force: true });
+
+  await Fam.bulkCreate(famData, {
+    individualHooks: false,
+    returning: true,
+  });
 
   process.exit(0);
 };
 
-seedDatabase();
+seedFambase();

@@ -2,7 +2,6 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
 class Fam extends Model {}
-
 Fam.init(
   {
     id: {
@@ -15,15 +14,13 @@ Fam.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    relation: {
+    father: {
       type: DataTypes.STRING,
+      allowNull: true,
     },
-    user_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'user',
-        key: 'id',
-      },
+    mother: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   },
   {

@@ -1,13 +1,18 @@
-const User = require('./User');
 const Fam = require('./Fam');
 
-User.hasMany(Fam, {
-  foreignKey: 'user_id',
-  onDelete: 'CASCADE'
+// var Task = sequelize.define('Task', {
+//  name: Sequelize.STRING
+//});
+
+Fam.belongsToMany(Fam, {
+  as: 'children',
+  foreignKey: 'Fam_id',
+  through: 'ParentHasChild',
+});
+Fam.belongsToMany(Fam, {
+  as: 'parents',
+  foreignKey: 'Fam_id',
+  through: 'ParentHasChild',
 });
 
-Fam.belongsTo(User, {
-  foreignKey: 'user_id'
-});
-
-module.exports = { User, Fam };
+module.exports = { Fam };
