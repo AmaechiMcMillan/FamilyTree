@@ -1,8 +1,8 @@
 const sequelize = require('../config/connection');
-const { User, Fam } = require('../models');
+const { User, Tree }= require('../models');
 
 const userData = require('./userData.json');
-const famData = require('./famData.json');
+const treeData = require('./treeData.json');
 
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });
@@ -11,18 +11,13 @@ const seedDatabase = async () => {
     individualHooks: true,
     returning: true,
   });
-}
 
-const seedFambase = async () => {
-  await sequelize.sync({ force: true });
-
-  await Fam.bulkCreate(famData,{
-    individualHooks: false,
-    returning: true,
-    });
-
+   await Tree.bulkCreate(treeData,{
+     individualHooks: true,
+     returning: true,
+     });
 
   process.exit(0);
 };
 
-seedFambase();
+seedDatabase();

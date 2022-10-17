@@ -1,11 +1,11 @@
-const Fam = require('./Fam');
+const User = require('./User');
+const Tree = require("./Tree")
+
+//User.belongsToMany(Tree, { as: 'Trees', foreignKey: 'owner_id', through: 'Tree' });
+//Tree.hasOne(User, { as: 'User', foreignKey: 'owner_id', through: 'User' });
 
 
-// var Task = sequelize.define('Task', {
-//  name: Sequelize.STRING
-//});
 
-Fam.belongsToMany(Fam, { as: 'children', foreignKey: 'Fam_id', through: 'ParentHasChild' });
-Fam.belongsToMany(Fam, { as: 'parents', foreignKey: 'Fam_id', through: 'ParentHasChild' });
 
-module.exports = { Fam };
+module.exports = { User, Tree};
+
