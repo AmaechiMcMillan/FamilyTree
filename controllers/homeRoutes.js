@@ -2,7 +2,14 @@ const router = require('express').Router();
 const { Fam, User } = require('../models');
 const withAuth = require('../utils/auth');
 
-router.get('/', async (req, res) => {
+router.get('/', withAuth, async (req, res) => {
+  if (req.session.logged_in) {
+    res.redirect('/family');
+    return;
+  }
+
+});
+router.get('/family', async (req, res) => {
   try {
     const famData = await Fam.findAll({
       include: [
@@ -23,7 +30,6 @@ router.get('/', async (req, res) => {
     res.status(500).json(err);
   }
 });
-
 router.get('/fam/:id', async (req, res) => {
   try {
     const famData = await Fam.findByPk(req.params.id, {
@@ -67,7 +73,7 @@ router.get('/profile', withAuth, async (req, res) => {
 
 router.get('/login', (req, res) => {
   if (req.session.logged_in) {
-    res.redirect('/profile');
+    res.redirect('/family');
     return;
   }
 
