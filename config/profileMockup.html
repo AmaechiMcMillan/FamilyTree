@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Your Family Tree</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/uikit.min.css" />
+    <script src="js/uikit.min.js"></script>
+    <script src="js/uikit-icons.min.js"></script>
+  </head>
+  <body>
+    <div class="row">
+      <div class="col-auto">
+        <h2>Welcome, {{name}}!</h2>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <h3>Create Family Tree:</h3>
+
+        <form class="form new-family-form">
+          <div class="form-group">
+            <label for="first-name">First Name:</label>
+            <input
+              class="form-input"
+              type="text"
+              id="first-name"
+              name="first-name"
+            />
+          </div>
+          <div class="form-group">
+            <label for="last-name">Last Name:</label>
+            <input
+              class="form-input"
+              type="text"
+              id="last-name"
+              name="last-name"
+            />
+          </div>
+          <div class="form-group">
+            <label for="family-relation">Relation:</label>
+            <textarea
+              class="form-input"
+              id="family-relation"
+              name="family-relation"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Create</button>
+          </div>
+        </form>
+      </div>
+
+      {{#if familys.length}}
+      <div class="col-md-6 family-list">
+        <h3>Immediate family:</h3>
+
+        {{#each familys as |family|}}
+        <div class="row mb-2">
+          <div class="col-md-8">
+            <h4><a href="/family/{{family.id}}">{{family.name}}</a></h4>
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-sm btn-danger" data-id="{{family.id}}">
+              DELETE
+            </button>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+      {{/if}}
+    </div>
+
+    <script src="./js/profile.js"></script>
+  </body>
+</html>
