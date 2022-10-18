@@ -1,10 +1,10 @@
 const router = require('express').Router();
-const { Fam } = require('../../models');
+const { Tree } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 router.post('/', withAuth, async (req, res) => {
   try {
-    const newFam = await Fam.create({
+    const newFam = await Tree.create({
       ...req.body,
       user_id: req.session.user_id,
     });
@@ -17,19 +17,19 @@ router.post('/', withAuth, async (req, res) => {
 
 router.delete('/:id', withAuth, async (req, res) => {
   try {
-    const famData = await Fam.destroy({
+    const treeData = await Tree.destroy({
       where: {
         id: req.params.id,
         user_id: req.session.user_id,
       },
     });
 
-    if (!famData) {
+    if (!treeData) {
       res.status(404).json({ message: 'No family found with this id!' });
       return;
     }
 
-    res.status(200).json(famData);
+    res.status(200).json(treeData);
   } catch (err) {
     res.status(500).json(err);
   }

@@ -1,25 +1,31 @@
 const router = require('express').Router();
-const { Fam, User } = require('../models');
+const  User  = require('../models');
+const  Tree  = require('../models');
 const withAuth = require('../utils/auth');
+async function loadhack(){
+  const {syncTree} = await import('../utils/hack.js');
+  return syncTree;
+}
 
 router.get('/', async (req, res) => {
   try {
-    const famData = await Fam.findAll({
+    loadhack()
+    const treeData = await Tree.findAll({
       include: [
         {
-          model: User,
+          model: Tree,
           attributes: ['name'],
         },
         {
-          model: Fam,
+          model: Tree,
         },
       ],
     });
 
-    const fam = famData.map((fam) => fam.get({ plain: true }));
+    const tree = treeData.map((tree) => tree.get({ plain: true }));
 
     res.render('homepage', { 
-      fam, 
+      tree, 
       logged_in: req.session.logged_in 
     });
   } catch (err) {
@@ -27,26 +33,27 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/fam/:id', async (req, res) => {
+router.get('/tree/', async (req, res) => {
   try {
-    const famData = await Fam.findByPk(req.params.id, {
+    loadhack();
+    const treeData = await Tree.findByPk(req.params.id, {
       include: [
         {
-          model: User,
+     
           attributes: ['name'],
         },
         {
-          model: Fam,
+          model: Tree,
         },
       ],
     });
 
-    const fam = famData.get({ plain: true });
+    const tree = treeData.get({ plain: true });
 
-    res.render('fam', {
-      ...fam,
-      logged_in: req.session.logged_in
+    res.render('tree', {
+      ...tree,
     });
+    console.log(tree)
   } catch (err) {
     res.status(500).json(err);
   }
@@ -57,7 +64,7 @@ router.get('/profile', withAuth, async (req, res) => {
   try {
     const userData = await User.findByPk(req.session.user_id, {
       attributes: { exclude: ['password'] },
-      include: [{ model: Fam }],
+      include: [{ model: Tree }],
     });
 
     const user = userData.get({ plain: true });

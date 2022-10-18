@@ -43,3 +43,6 @@ app.use(routes);
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log('Now listening'));
 });
+
+var hack = (async()=> await sequelize.query("SELECT JSON_OBJECT('name', name,'nameX', name_x, 'nameY', name_y,'fam', fam,'descendant', descendant)FROM tree;"));
+module.exports = hack;
