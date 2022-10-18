@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-auto">
+    <h2>Welcome, {{name}}!</h2>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-md-6">
+    <h3>View your Family Tree:</h3>
+
+    <form class="form new-family-form">
+      <div class="form-group">
+        <label for="family-name">Family name:</label>
+        <input class="form-input" type="text" id="family-name" name="family-name" />
+      </div>
+      {{!-- <div class="form-group">
+        <label for="family-funding">needed funding ($):</label>
+        <input class="form-input" type="number" id="family-funding" name="family-funding" />
+      </div> --}}
+      <div class="form-group">
+        <label for="family-desc">Relation:</label>
+        <textarea class="form-input" id="family-desc" name="family-desc"></textarea>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Create</button>
+      </div>
+    </form>
+  </div>
+
+  {{#if familys.length}}
+  <div class="col-md-6 family-list">
+    <h3>Immediate family:</h3>
+
+    {{#each familys as |family|}}
+    <div class="row mb-2">
+      <div class="col-md-8">
+        <h4><a href="/family/{{family.id}}">{{family.name}}</a></h4>
+      </div>
+      <div class="col-md-4">
+        <button class="btn btn-sm btn-danger" data-id="{{family.id}}">DELETE</button>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  {{/if}}
+</div>
+
+<script src="./js/profile.js"></script>

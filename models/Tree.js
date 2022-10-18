@@ -25,11 +25,12 @@ Tree.init(
     },
     nameY: {
       type: DataTypes.STRING,
-      defaultValue: "test",
+      defaultValue: "none",
       allowNull: false
     },
     fam: {
       type: DataTypes.STRING,
+      defaultValue: "none",
       allowNull: false
     },
     descendant: {

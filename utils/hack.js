@@ -1,9 +1,12 @@
-import spawnData from "./seeds/spawnData.json" assert {type:"json"};
-import fs from 'fs';
+const spawnData = require("../seeds/spawnData.json");
+const fs = require('fs');
+const hack = require('../server');
+const sequelize = require('../config/connection');
+const Tree = require('../models/Tree');
+let newData =  hack;
 
-let newData;
 
-export var syncTree = (function iffy(data){
+var syncTree = (function iffy(data){
 const hive = spawnData.map((x)=>x);
 hive.forEach((x)=> x.fam = setFam(x)); 
       
@@ -29,6 +32,17 @@ for(let i=0; i<famCopy.length;i++){
       });
 }
 console.table(famCopy);
+ (async (famCopy) => {
+      await sequelize.sync({ force: true });
+    
+       await Tree.bulkCreate(famCopy,{
+         individualHooks: true,
+         returning: true,
+         });
+    
+      process.exit(0);
+    }
+)(famCopy);
 
 return newData = famCopy;
 
@@ -66,10 +80,13 @@ function setFam(obj){
 }
 })(newData);
 
-export function update(){ (async ()=> {
-      await fs.writeFile('./seeds/treeData.json',JSON.stringify(newData),'utf8', (err) =>{
-err ? console.log(err) : console.log('Success!')}
-)})();
+function update(path){ ( ()=> {
+      let Promise = JSON.stringify(newData);
+       fs.writeFile('./seeds/treeData.json',Promise,'utf8', (err) =>{
+err ? console.log(err) : console.log('Success!')
+            return Promise;
+});
+})();
 };
 
-update();
+module.exports = { syncTree, update};
