@@ -6,10 +6,16 @@ const newFormHandler = async (event) => {
   const nameY = document.querySelector('#name-y').value.trim();
 
   if (name && nameX && nameY) {
-    const response = await fetch(`/api/projects`, {
+    const response = await fetch(`/api/tree`, {
       method: 'POST',
-      body: JSON.stringify({ name, needed_funding: nameX, description: nameY }),
-      headers: {
+      body: JSON.stringify({
+        name,
+        nameX,
+        nameY,
+        fam,
+        descendant,
+      }),
+    headers: {
         'Content-Type': 'application/json',
       },
     });

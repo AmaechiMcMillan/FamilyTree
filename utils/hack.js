@@ -82,7 +82,7 @@ function setFam(obj){
 
 function update(path){ ( ()=> {
       let Promise = JSON.stringify(newData);
-       fs.writeFile('./seeds/treeData.json',Promise,'utf8', (err) =>{
+       fs.writeFile('../seeds/treeData.json',Promise,'utf8', (err) =>{
 err ? console.log(err) : console.log('Success!')
             return Promise;
 });
